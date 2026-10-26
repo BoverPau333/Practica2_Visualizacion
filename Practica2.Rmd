@@ -324,3 +324,84 @@ load("data/Experimento.Rdata")
 str(Experimento)
 ```
 
+El dataset contiene 6 observaciones y 4 columnas: Complemento (OJ o VC), Dosis administrada, Altura media y Error_Altura asociado.
+
+```{r}
+#Gráfico con puntos y una línea de distinto trazo por complemento.
+grafico1 <- ggplot(
+  Experimento,
+  aes(
+    x = Dosis,
+    y = Altura,
+    group = Complemento,
+    linetype = Complemento,
+    shape = Complemento
+  )
+) +
+  geom_point() +
+  geom_line()
+
+grafico1
+```
+El código asigna Dosis al eje X y Altura al eje Y, diferencia cada Complemento mediante linetype y shape dentro de aes(), y dibuja los puntos y las líneas con geom_point() y geom_line(). La altura aumenta con la dosis en ambos complementos; OJ presenta valores mayores en las dosis bajas, pero ambos alcanzan una altura similar con la dosis de 2.
+
+```{r}
+#help(geom_errorbar)
+```
+
+
+```{r}
+grafico2 <- grafico1 + geom_errorbar(
+    aes(
+      ymin = Altura - Error_Altura,
+      ymax = Altura + Error_Altura
+    ),
+    width = 0.1)
+
+grafico2
+```
+Se mantiene la tendencia anterior, pero las barras muestran la variabilidad de las alturas y su solapamiento, OJ presenta mas error excepro en la dosis 2, donde ambos complementos presentan medias similares, y OJ reduce el error.
+
+Definiendo forma y tipo de línea en sus propias capas. Añadimos color por complemento y una paleta de tonos rojos.
+
+```{r}
+grafico3 <- ggplot(
+  Experimento,
+  aes(
+    x = Dosis,
+    y = Altura,
+    group = Complemento,
+    color = Complemento
+  )
+) +
+  geom_point(aes(shape = Complemento)) +
+  geom_line(aes(linetype = Complemento)) +
+  geom_errorbar(
+    aes(
+      ymin = Altura - Error_Altura,
+      ymax = Altura + Error_Altura
+    ),
+    width = 0.1
+  ) +
+  scale_color_brewer(palette = "Reds") + theme_classic()
+
+grafico3
+
+```
+Añado theme clasico porque sino la paleta de rojos no se visualiza correctamnete.
+
+```{r}
+ggsave(
+  filename = "./results/Ejercicio5.pdf",
+  plot = grafico3
+)
+```
+
+## Ejercicio 6
+
+```{r}
+load("data/iceRiver.RData")
+
+str(ice.river.df)
+```
+

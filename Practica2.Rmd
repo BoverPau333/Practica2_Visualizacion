@@ -184,26 +184,99 @@ ggsave(
 
 ## Ejercicio 3
 
+
+
 Cargamos el Dataset desde data y visualizamos el tipo de las variables del dataset.
 
 ```{r}
 # Cargamos los datos y consultamos su estructura.
-load("data/iris.RData")
-str(iris)
+load("data/iris_tidy.Rdata")
 
+str(iris.tidy)
+
+```
+
+Creamos un objeto ggplot denominado iris.grafico1 en el que esté definido el conjunto de datos iris.tidy y un aesthetics en el que en el eje x esté definida la variable Species y en el eje y esté definida la variable Value y añadimos una capa de puntos para construir un gráfico de dispersión de las variables Species y Value.
+
+```{r}
+iris.grafico1 <- ggplot(
+  data = iris.tidy,
+  aes(x = Species, y = Value)
+)  +
+  geom_point()
+iris.grafico1
+```
+Al ser Specie una variable categorica se ven como columnas en el grafico. Posteriormnete añadimos Part como variable que determina el color
+
+```{r}
+# Añadimos Part como variable que determina el color.
+iris.grafico2 <- iris.grafico1 +
+  aes(color = Part)
+
+iris.grafico2
+
+```
+
+```{r}
+#Ayuda de facet
+#help(facet_grid)
 ```
 
 
 ```{r}
-iris.grafico1 <- ggplot(
-  data = iris,
-  aes(x = Species, y = Value)
-)
-iris.grafico1
+# Separamos los valores de Measure en filas.
+iris.filas <- iris.grafico2 +
+  geom_point() +
+  facet_grid(Measure ~ .)
+
+iris.filas
 ```
+```{r}
+iris.columnas <- iris.grafico2 +
+  geom_point() +
+  facet_grid(. ~ Measure)
+iris.columnas
+```
+
+A mi parecer se entiende mejor la informacion cuando el grid se ve en columnas, la disposición en columnas facilita comparar los valores de las dos medidas, porque los paneles comparten el eje vertical y una misma altura representa el mismo valor. Ahora añado ruido a las variable categorica con geom_jitter pero solo de ancho, ya que alto desvirtuaria los datos.
+
+```{r}
+iris.final <- ggplot(
+  data = iris.tidy,
+  aes(x = Species, y = Value, color = Part)
+)  +
+  geom_jitter(width = 0.2, height = 0)  +
+  facet_grid(. ~ Measure) 
+
+iris.final
+```
+Al añadir el ruido se aprecia mejor el numero de instancias que hay en cada grupo y altura sin modificar los datos ya que la altura se conserva, permitiendo visaulizar mejor una variable categorica.
+
+```{r}
+ggsave(
+  filename = "./results/Ejercicio3.pdf",
+  plot = iris.final
+)
+```
+
 ## Ejercicio 4
 
 
+Cargamos y visualizamos el dataset del ejercicio 4
+```{r}
+load("data/Ejercicio4_Data.Rdata")
 
+str(DatosEjer4)
+```
+Tiene 3 columnas, Fecha de la venta en formato Date el fabricante como Factor y las ventas como numero decimal
 
+```{r}
+grafico_puntos <- ggplot(
+  DatosEjer4,
+  aes(x = Fecha, y = Ventas, color = Fabricante)
+) +
+  geom_point()
 
+grafico_puntos
+```
+El gráfico de puntos permite observar las ventas en cada fecha, pero con tanto punto queda confuso la evolucion del tiempo de ventas, por tanto otros tipos de grafica ayudarian mejor a expresar ese concepto.

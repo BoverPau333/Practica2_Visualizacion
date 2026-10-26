@@ -403,5 +403,49 @@ ggsave(
 load("data/iceRiver.RData")
 
 str(ice.river.df)
+#?tseries::ice.river
+```
+
+El dataset contiene los registros diarios de 1972 a 1974: `flow.vat` y `flow.jok` representan el caudal medio de los ríos Vatnsdalsa y Jokulsa Eystri, en m³/s.  
+Las columnas `prec` y `temp` recogen la precipitación diaria (mm) y la temperatura media diaria (°C) en Hveravellir.
+
+```{r}
+grafico <- ggplot(ice.river.df, aes(x = time)) +
+  geom_line(aes(y = flow.vat, color = "flow.vat")) +
+  geom_line(aes(y = flow.jok, color = "flow.jok")) +
+  scale_color_manual(
+    values = c("flow.vat" = "red", "flow.jok" = "blue"),
+    labels = c("flow.vat" = "Vatnsdalsa", "flow.jok" = "Jokulsa Eystri")
+  )
+
+grafico
+```
+El río Jokulsa Eystri presenta un caudal mayor y fluctuaciones más pronunciadas que el Vatnsdalsa durante todo el período.  
+Ambos muestran picos en épocas similares de cada año, lo que sugiere un patrón estacional.
+
+```{r}
+grafico_leyenda <- grafico + labs(
+    title = "Caudal diario de dos ríos islandeses",
+    subtitle = "Evolución durante el período 1972–1974",
+    x = "Año",
+    y = "Caudal medio diario (m³/s)",
+    color = "Río"
+  )
+
+grafico_leyenda
+
+```
+
+```{r}
+ggsave(
+  filename = "./results/Ejercicio6.pdf",
+  plot = grafico_leyenda
+)
+```
+
+## Ejercicio 7
+
+```{r}
+
 ```
 

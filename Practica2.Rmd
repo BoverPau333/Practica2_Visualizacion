@@ -54,5 +54,148 @@ language:
 # Practica 2
 Pau Bover Femenias
 
+```{r}
+library(pacman)
+packages =  c("tidyverse", "knitr", "ggplot2", "datasets", "RColorBrewer",'latex2exp')
+pacman::p_load(char=packages)
+```
+
+Cargamos las bibliotecas que usaremos durante la practica y creamos la carpeta de results.
+
+```{r}
+# Creamos la carpeta de resultados si no existe.
+dir.create("results", showWarnings = FALSE)
+```
+
+
 ## Ejercicio 1  
+
+Cargamos el fichero con formato .RData de la carpeta de data.
+
+```{r}
+# Cargamos el fichero, que contiene el conjunto de datos ds.
+load("data/weatherAUS.RData")
+
+```
+
+Creo un objeto ggplot denominado grafico1 en el que esté definido el conjunto de datos ds alojado en el fichero weatherAUS.RData y un aesthetics en el que en el eje x esté definida la variable MinTemp y en el eje y esté definida la variable MaxTemp.
+
+```{r}
+# Definimos los datos y las variables de los ejes.
+grafico1 <- ggplot(data = ds, aes(x = MinTemp, y = MaxTemp))
+grafico1
+```
+Añado los puntos para construir un gráfico de dispersión de las variables MinTemp y MaxTemp.
+
+```{r}
+# Añadimos los puntos para representar el gráfico de dispersión.
+grafico1 + geom_point()
+```
+
+Genero el mismo gráfico y lo almaceno en grafico2 definiendo el aesthetics para visualizar las variables MinTemp y MaxTemp en los ejes de la gráfica y la variable categórica RainTomorrow como el color. A partir de este, represento un gráfico de dispersión en el que se muestren los puntos con el color del punto correspondiente a la variable RainTomorrow.
+
+```{r}
+# Definimos RainTomorrow como variable que determina el color.
+grafico2 <- ggplot(
+  data = ds,
+  aes(x = MinTemp, y = MaxTemp, color = RainTomorrow)
+) + geom_point()
+grafico2
+```
+Ponemos el titulo con la funcion ggtitle y lo guardamos en una variable nueva
+
+```{r}
+grafico3 <- grafico2 +
+  ggtitle("Temperatura mínima y máxima según la previsión de lluvia")
+grafico3
+```
+
+Guardamos la ultima grafica como PDF en la carpeta de results.
+
+
+```{r}
+# Exportamos explícitamente grafico3 a PDF.
+ggsave(
+  filename = "./results/Ejercicio1.pdf",
+  plot = grafico3
+)
+```
+
+## Ejercicio 2
+
+Scatter Plot de Temp9am y Pressure9am en los ejes x e y respectivamente.
+
+```{r}
+grafico <- ggplot(ds, aes(x = Temp9am, y = Pressure9am)) +
+  geom_point()
+grafico
+```
+
+Añadimos el punto para representar RainToday
+
+```{r}
+# Representamos RainToday mediante la forma del punto.
+grafico_forma <- ggplot(
+  ds,
+  aes(x = Temp9am, y = Pressure9am, shape = RainToday)
+) +
+  geom_point()
+
+grafico_forma
+
+```
+
+Realizamos el mismo proceso pero ahora con el color: 
+
+```{r}
+grafico_color <- ggplot(
+  ds,
+  aes(x = Temp9am, y = Pressure9am, color = RainToday)
+) +
+  geom_point()
+
+grafico_color
+```
+Vemos como se aprecia mucho mejor la diferencia con el color, con la forma queda confuso y no se entiende correctamente, en cambio con el color con un vistazo ya difrencias bien los 2 grupos. Finalmente añadimos titulos e informacion necesaria a la grafica del color:
+
+```{r}
+# Añadimos título, subtítulo, etiquetas de los ejes y de la leyenda.
+grafico_color <- grafico_color +
+  labs(
+    title = "Temperatura y presión atmosférica a las 9:00",
+    subtitle = "Observaciones diferenciadas según si llueve ese día",
+    x = "Temperatura a las 9:00 (°C)",
+    y = "Presión atmosférica a las 9:00 (hPa)",
+    color = "Lluvia hoy"
+  )
+
+grafico_color
+```
+Y guardamos la grafica final en resultados.
+
+```{r}
+
+ggsave(
+  filename = "./results/Ejercicio2.pdf",
+  plot = grafico_color
+)
+
+```
+
+## Ejercicio 3
+
+Cargamos el Dataset desde data.
+```{r}
+# Cargamos los datos y consultamos su estructura.
+load("data/iris.RData")
+```
+
+
+```{r}
+iris.grafico1 <- ggplot(
+  data = iris.tidy,
+  aes(x = Species, y = Value)
+)
+```
+
 

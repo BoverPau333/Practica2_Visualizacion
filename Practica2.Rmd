@@ -184,18 +184,26 @@ ggsave(
 
 ## Ejercicio 3
 
-Cargamos el Dataset desde data.
+Cargamos el Dataset desde data y visualizamos el tipo de las variables del dataset.
+
 ```{r}
 # Cargamos los datos y consultamos su estructura.
 load("data/iris.RData")
+str(iris)
+
 ```
 
 
 ```{r}
 iris.grafico1 <- ggplot(
-  data = iris.tidy,
+  data = iris,
   aes(x = Species, y = Value)
 )
+iris.grafico1
 ```
+## Ejercicio 4
+
+
+
 
 

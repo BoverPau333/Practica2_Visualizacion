@@ -446,6 +446,63 @@ ggsave(
 ## Ejercicio 7
 
 ```{r}
+load("data/weatherAUS_distributions.RData")
+
+str(ds)
+```
+
+El dataset contiene 863 observaciones meteorológicas de distintas localidades australianas y 24 variables, como temperaturas, precipitaciones, viento, humedad y presión, con algunos valores ausentes (`NA`).  
+La variable `Year` agrupa los registros en 11 años y permite comparar las distribuciones de `MinTemp` y `MaxTemp` por año.
+
+```{r}
+# Boxplots de las temperaturas mínimas por año.
+grafico_boxplot <- ggplot(ds, aes(x = Year, y = MinTemp)) +
+  geom_boxplot() +
+  labs(
+    title = "Distribución de temperaturas mínimas por año",
+    x = "Año",
+    y = "Temperatura (ºC)"
+  )
+
+grafico_boxplot
 
 ```
+Las temperaturas mínimas presentan medianas entre 10 y 14 °C en la mayoría de los años; destaca 2016, con una mediana cercana a 18 °C y menor dispersión.  
+Se observan valores atípicos en 2009, 2011 y 2013, sin una tendencia creciente o decreciente clara en el conjunto del período.
+
+```{r}
+# Violines de las temperaturas máximas, coloreados por año.
+grafico_violin <- ggplot(
+  ds,
+  aes(x = Year, y = MaxTemp, fill = Year)
+) +
+  geom_violin() +
+  labs(
+    title = "Distribución de temperaturas máximas por año",
+    x = "Año",
+    y = "Temperatura (ºC)",
+    fill = "Año"
+  )
+
+grafico_violin
+```
+Los violines muestran dónde se concentran las temperaturas máximas: destaca 2016, con valores elevados y menor dispersión y 2008 ccon valores mas bajos y sin colas tan largas.
+Frente al boxplot anterior, muestran la densidad de la distribución, sin señalar medianas ni valores atípicos.
+
+```{r}
+#Busco informacion sobre como inclinar el texto de x
+#help(theme)
+```
+
+```{r}
+
+grafico_final <- grafico_violin +
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+
+grafico_final
+```
+En este caso que solo diferenciamos por colores los años eliminar la leyenda quita informacion redundante y hace mas limpia la grafica.
 

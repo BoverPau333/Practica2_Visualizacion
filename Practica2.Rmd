@@ -253,7 +253,7 @@ iris.columnas <- iris.grafico2 +
 iris.columnas
 ```
 
-A mi parecer se entiende mejor la informacion cuando el grid se ve en columnas, la disposición en columnas facilita comparar los valores de las dos medidas, porque los paneles comparten el eje vertical y una misma altura representa el mismo valor. Ahora añado ruido a las variable categorica con geom_jitter pero solo de ancho, ya que alto desvirtuaria los datos.
+A mi parecer se entiende mejor la informacion cuando el grid se ve en columnas, la disposición en columnas facilita comparar los valores de las dos medidas, porque los paneles comparten el eje vertical y una misma altura representa el mismo valor. Ahora añado ruido a las variable categorica con geom_jitter pero solo de ancho, ya que alto desvirtuaria los datos. Al separar por ancho y largo si se aprecian mas las diferencias entre sepalo y petalo.
 
 ```{r}
 iris.final <- ggplot(
@@ -265,7 +265,7 @@ iris.final <- ggplot(
 
 iris.final
 ```
-Al añadir el ruido se aprecia mejor el numero de instancias que hay en cada grupo y altura sin modificar los datos ya que la altura se conserva, permitiendo visaulizar mejor una variable categorica.
+Al añadir el ruido se aprecia mejor el numero de instancias que hay en cada grupo y altura sin modificar los datos ya que la altura se conserva, permitiendo visaulizar mejor una variable categorica. Con esto si se aprecia correctamnete la diferencicacion como 2 grupos separados.
 
 ```{r}
 ggsave(

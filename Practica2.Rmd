@@ -547,3 +547,33 @@ grafico1
 ```
 
 El histograma presenta barras azules con una transparencia del 50 % y contorno rojo, distribuidas en 20 intervalos entre 155 y 195 cm. La mayor concentración de alturas se encuentra entre 165 y 180 cm, con el intervalo más frecuente alrededor de 170 cm. La distribución es aproximadamente unimodal, con pocas observaciones en los extremos.
+
+```{r}
+grafico2 <- grafico1 +
+  geom_density(
+    aes(y = after_stat(count*2)),
+    color = "green",
+    linewidth = 1
+  )
+  
+grafico2
+```
+Uso `count * 2` porque cada barra abarca 2 cm,`geom_density()` estima una curva de densidad; su variable calculada `count` equivale a **densidad × número de observaciones**. Al multiplicarla por la anchura del intervalo, la curva queda en la misma escala de frecuencias que las barras. En el gráfico, la curva verde muestra de forma suavizada la distribución de las alturas: la mayor concentración está alrededor de **170–175 cm**, y la frecuencia disminuye hacia ambos extremos.
+
+```{r}
+grafico_final <- grafico2 +
+  facet_grid(. ~ MORT )
+
+grafico_final
+```
+
+El grupo `alive` concentra la mayoría de las observaciones, con alturas principalmente entre 165 y 180 cm y un máximo alrededor de 170 cm como lo que hemos observado en la grafica anterior.  
+El grupo `dead` tiene menos registros y una distribución más irregular; las curvas verdes suavizan ambas distribuciones, pero las frecuencias dependen del tamaño de cada grupo.
+
+```{r}
+ggsave(
+  filename = "./results/Ejercicio8.pdf",
+  plot = grafico_final
+)
+```
+

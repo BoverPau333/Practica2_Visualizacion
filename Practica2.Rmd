@@ -279,4 +279,48 @@ grafico_puntos <- ggplot(
 
 grafico_puntos
 ```
-El gráfico de puntos permite observar las ventas en cada fecha, pero con tanto punto queda confuso la evolucion del tiempo de ventas, por tanto otros tipos de grafica ayudarian mejor a expresar ese concepto.
+El gráfico de puntos permite observar las ventas en cada fecha, pero con tanto punto queda confuso la evolucion del tiempo de ventas, por tanto otros tipos de grafica ayudarian mejor a expresar ese concepto. Por tanto represento un gráfico como el anterior en el que se muestran la línea que une los puntos que antes he representado.
+
+```{r}
+grafico_lineas <- grafico_puntos +
+  geom_line(aes(group = Fabricante))
+grafico_lineas
+```
+Las líneas facilitan seguir la evolución de cada fabricante y comparar sus cambios, expresando mejor la idea de la evolucion de las ventas en el timepo.
+
+Ahora cambio el grafico para que cada fabricante tenga un tipo linea a parte:
+
+```{r}
+grafico_tipo_linea <- grafico_puntos +
+  geom_line(
+    aes(group = Fabricante, linetype = Fabricante)
+  )
+
+grafico_tipo_linea
+```
+Añado los titulos y subtitulos necesarios, finalmnete lo guardo como PDF en /results:
+
+```{r}
+grafico_final <- grafico_tipo_linea + labs(
+    title = "Ventas mensuales de diferentes compañías tecnológicas",
+    x = "Fecha",
+    y = "Ventas",
+    color = "Fabricante",
+    linetype = "Fabricante"
+  )
+
+grafico_final
+```
+```{r}
+ggsave(
+  filename = "./results/Ejercicio4.pdf",
+  plot = grafico_final
+)
+```
+
+```{r}
+load("data/Experimento.Rdata")
+
+str(Experimento)
+```
+

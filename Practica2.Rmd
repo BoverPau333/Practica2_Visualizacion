@@ -313,6 +313,8 @@ grafico_tipo_linea <- grafico_puntos +
 
 grafico_tipo_linea
 ```
+En esta grafica se aprecia mejor las tendencias de las Ventas vemos como Microsoft vende mas, tambien se aprecia una cierta correlacion expecto del 2009 hacia delante donde cambian de comportamiento.
+
 Añado los titulos y subtitulos necesarios, finalmnete lo guardo como PDF en /results:
 
 ```{r}

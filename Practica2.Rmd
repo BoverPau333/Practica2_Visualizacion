@@ -506,3 +506,44 @@ grafico_final
 ```
 En este caso que solo diferenciamos por colores los años eliminar la leyenda quita informacion redundante y hace mas limpia la grafica.
 
+```{r}
+ggsave(
+  filename = "./results/Ejercicio7.pdf",
+  plot = grafico_final
+)
+```
+
+## Ejercicio 8
+
+```{r}
+download.file(
+  url = "https://assets.datacamp.com/blog_assets/chol.txt",
+  destfile = "data/chol.txt",
+  mode = "wb"
+)
+
+datos <- read.table("data/chol.txt", header = TRUE)
+str(datos)
+```
+Se descarga el fichero `chol.txt` y se carga en un dataframe con 200 observaciones y 7 columnas: edad (`AGE`), altura (`HEIGHT`), peso (`WEIGHT`), colesterol (`CHOL`), hábito de fumar (`SMOKE`), grupo sanguíneo (`BLOOD`) y estado vital (`MORT`: vivo o fallecido).
+
+```{r}
+# Histograma con barras azules, transparencia del 50% y borde rojo.
+grafico1 <- ggplot(datos, aes(x = HEIGHT)) +
+  geom_histogram(
+    breaks = seq(155, 195, length.out = 21),
+    fill = "blue",
+    alpha = 0.5,
+    color = "red"
+  ) +
+  labs(
+    title = "Histograma de la variable Altura",
+    x = "Altura (cm)",
+    y = "Frecuencia"
+  ) +
+  coord_cartesian(xlim = c(155, 195))
+
+grafico1
+```
+
+El histograma presenta barras azules con una transparencia del 50 % y contorno rojo, distribuidas en 20 intervalos entre 155 y 195 cm. La mayor concentración de alturas se encuentra entre 165 y 180 cm, con el intervalo más frecuente alrededor de 170 cm. La distribución es aproximadamente unimodal, con pocas observaciones en los extremos.

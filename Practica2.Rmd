@@ -75,8 +75,12 @@ Cargamos el fichero con formato .RData de la carpeta de data.
 ```{r}
 # Cargamos el fichero, que contiene el conjunto de datos ds.
 load("data/weatherAUS.RData")
+str(ds)
 
 ```
+
+El dataset contiene 863 observaciones meteorológicas de distintas localidades australianas y 24 variables, como temperaturas, precipitaciones, viento, humedad y presión, con algunos valores ausentes (`NA`).  
+La variable `Year` agrupa los registros en 11 años y permite comparar las distribuciones de `MinTemp` y `MaxTemp` por año.
 
 Creo un objeto ggplot denominado grafico1 en el que esté definido el conjunto de datos ds alojado en el fichero weatherAUS.RData y un aesthetics en el que en el eje x esté definida la variable MinTemp y en el eje y esté definida la variable MaxTemp.
 
@@ -91,6 +95,8 @@ Añado los puntos para construir un gráfico de dispersión de las variables Min
 # Añadimos los puntos para representar el gráfico de dispersión.
 grafico1 + geom_point()
 ```
+El gráfico de dispersión relaciona la temperatura mínima (MinTemp, eje X) con la máxima (MaxTemp, eje Y); cada punto representa una observación meteorológica.
+Se aprecia una relación positiva: cuanto mayor es la temperatura mínima, mayor suele ser la máxima, aunque existe variabilidad entre las observaciones.
 
 Genero el mismo gráfico y lo almaceno en grafico2 definiendo el aesthetics para visualizar las variables MinTemp y MaxTemp en los ejes de la gráfica y la variable categórica RainTomorrow como el color. A partir de este, represento un gráfico de dispersión en el que se muestren los puntos con el color del punto correspondiente a la variable RainTomorrow.
 
@@ -102,7 +108,9 @@ grafico2 <- ggplot(
 ) + geom_point()
 grafico2
 ```
-Ponemos el titulo con la funcion ggtitle y lo guardamos en una variable nueva
+Los puntos turquesa (Yes) tienden a presentar máximas más bajas para mínimas similares, aunque ambas categorías se solapan ampliamente.
+
+Ponemos el titulo con la funcion ggtitle y lo guardamos en una variable nueva.
 
 ```{r}
 grafico3 <- grafico2 +
@@ -130,8 +138,10 @@ grafico <- ggplot(ds, aes(x = Temp9am, y = Pressure9am)) +
   geom_point()
 grafico
 ```
+El gráfico relaciona la temperatura (`Temp9am`) con la presión atmosférica (`Pressure9am`) a las 9:00.  
+Se observa una relación negativa: a mayor temperatura, la presión tiende a ser menor, aunque existe dispersión y algunos valores extremos.
 
-Añadimos el punto para representar RainToday
+Añadimos diferentes tipos de punto para representar RainToday
 
 ```{r}
 # Representamos RainToday mediante la forma del punto.
@@ -144,6 +154,7 @@ grafico_forma <- ggplot(
 grafico_forma
 
 ```
+La forma de los puntos diferencia los días con lluvia de los días sin lluvia (`RainToday`), pero la superposición de muchos puntos dificulta distinguir las categorías.
 
 Realizamos el mismo proceso pero ahora con el color: 
 
@@ -196,6 +207,9 @@ str(iris.tidy)
 
 ```
 
+El dataset contiene 600 observaciones y 4 columnas: `Species` identifica la especie de iris y `Part` indica si la medida corresponde al pétalo o al sépalo.  
+`Measure` distingue entre longitud (`Length`) y anchura (`Width`), mientras que `Value` recoge el valor de cada medida en centímetros.
+
 Creamos un objeto ggplot denominado iris.grafico1 en el que esté definido el conjunto de datos iris.tidy y un aesthetics en el que en el eje x esté definida la variable Species y en el eje y esté definida la variable Value y añadimos una capa de puntos para construir un gráfico de dispersión de las variables Species y Value.
 
 ```{r}
@@ -216,6 +230,7 @@ iris.grafico2 <- iris.grafico1 +
 iris.grafico2
 
 ```
+Si bien se aprecian diferencias entre el petalo y el sepalo con los colores, visualizando asi la grafica se superponen muchos puntos y no permiten extraer conclusiones claras.
 
 ```{r}
 #Ayuda de facet
